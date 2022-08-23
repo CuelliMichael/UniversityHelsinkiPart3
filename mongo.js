@@ -7,40 +7,41 @@ if (process.argv.length < 3) {
 
 const password = process.argv[2]
 
-const url = `mongodb+srv://MichaelCuelli:${password}@fullstackhelsinki.t2yrylm.mongodb.net/phonebook?retryWrites=true&w=majority`
+const url = `mongodb+srv://MichaelCuelli:${password}@fullstackhelsinki.t2yrylm.mongodb.net/person?retryWrites=true&w=majority`
 
 
-const phonebookSchema = new mongoose.Schema({
+const personSchema = new mongoose.Schema({
     name: String,
     number: String,
 })
 
-const PhoneBook = mongoose.model('PhoneBook', phonebookSchema)
+const Person = mongoose.model('Person', personSchema)
 
 mongoose
     .connect(url)
     .then((result) => {
         console.log('connected')
 
-        if(process.argv[3] === undefined || number === process.argv[4]){ 
-            return PhoneBook.find({}).then(result => {
-                console.log('phonebook');
-                result.forEach(phonebook => {
-                    console.log(phonebook);
+        if (process.argv[3] === undefined || process.argv[4] === undefined) {
+            return Person.find({}).then(result => {
+                console.log('person');
+                result.forEach(person => {
+                    console.log(person);
                 })
                 mongoose.connection.close()
             });
-        }else{
-        const phonebook = PhoneBook({
-            name: process.argv[3],
-            number: process.argv[4]
-        })
+        } else {
+            
+            const person = Person({
+                name: process.argv[3],
+                number: process.argv[4]
+            })
 
-        return phonebook.save();
-    }
+            return person.save();
+        }
     })
     .then(() => {
-        if(process.argv[3] !== undefined && number !== process.argv[4]){ 
+        if (process.argv[3] !== undefined &&  process.argv[4] !== undefined) {
             console.log(`added ${process.argv[3]} ${process.argv[4]} to phonebook`)
         }
         return mongoose.connection.close()
