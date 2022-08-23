@@ -19,25 +19,24 @@ const Person = mongoose.model('Person', personSchema)
 
 mongoose
     .connect(url)
-    .then((result) => {
+    .then(() => {
         console.log('connected')
 
         if (process.argv[3] === undefined || process.argv[4] === undefined) {
             return Person.find({}).then(result => {
-                console.log('person');
+                console.log('person')
                 result.forEach(person => {
-                    console.log(person);
+                    console.log(person)
                 })
                 mongoose.connection.close()
-            });
+            })
         } else {
-            
             const person = Person({
                 name: process.argv[3],
                 number: process.argv[4]
             })
 
-            return person.save();
+            return person.save()
         }
     })
     .then(() => {
@@ -47,5 +46,5 @@ mongoose
         return mongoose.connection.close()
     })
     .catch((err) => {
-        console.log(err);
+        console.log(err)
     })
