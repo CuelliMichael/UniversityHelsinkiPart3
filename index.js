@@ -18,7 +18,7 @@ morgan.token('request_body', function getRequestData(req) {
         return JSON.stringify({ name: body.name, number: body.number });
     }
 })
-
+ 
 app.use(morgan('tiny'))
 app.use(morgan(':method :url :response-time :request_body '))
 
